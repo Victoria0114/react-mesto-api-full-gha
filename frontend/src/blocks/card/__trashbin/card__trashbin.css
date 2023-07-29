@@ -1,0 +1,16 @@
+.card__trashbin {
+  background-image: url(./../../../images/trashbin.svg);
+  width: 18px;
+  height: 19px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.card__trashbin:hover {
+  opacity: 0.5;
+}

@@ -1,0 +1,17 @@
+.card__like {
+  width: 22px;
+  height: 19px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, 0);
+  background-image: url(../../../images/heart.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
+.card__like:hover {
+  opacity: 0.5;
+}
+.card__like:active {
+  background-image: url(../../../images/black_heart.svg);
+  opacity: 100%;
+}
