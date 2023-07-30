@@ -17,7 +17,6 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   }
   function handleLikeClick() {
     onCardLike(card);
-    console.log(onCardLike);
   }
   function handleDeleteClick() {
     onCardDelete(card);

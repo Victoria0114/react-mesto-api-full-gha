@@ -13,6 +13,10 @@
 /*  header  */
 @import url(./blocks/header/header.css);
 @import url(./blocks/logo/logo.css);
+@import url(./blocks/header/__container/header__container.css);
+@import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__link/header__link.css);
+
 
 /*  content  */
 @import url(./blocks/content/content.css);
@@ -66,8 +70,26 @@
 @import url(./blocks/popup/__close/_type/popup__close_type_image.css);
 @import url(./blocks/popup/__open-image/popup__open-image.css);
 
+@import url(./blocks/popup/__img/popup__img.css);
+@import url(./blocks/popup/__caption/popup__caption.css);
+@import url(./blocks/popup/__hidden-label/popup__hidden-label.css);
+
+@import url(./blocks/popup/__overlay/popup__overlay.css);
 /*  form error  */
 @import url(./blocks/popup/__edit-form/_type/popup__edit-form_type_error.css);
 @import url(./blocks/popup/__span/popup__span_error.css);
 @import url(./blocks/popup/__span/_error/popup__span_error_visible.css);
 @import url(./blocks/popup/__save/_disabled/popup__save_disabled.css);
+
+/*  sign  */
+@import url(./blocks/sign/sign.css);
+@import url(./blocks/sign/__fieldset/sign__fieldset.css);
+@import url(./blocks/sign/__header/sign__header.css);
+@import url(./blocks/sign/__input-error/sign__input-error.css);
+@import url(./blocks/sign/__input/sign__input.css);
+@import url(./blocks/sign/__label/sign__label.css);
+@import url(./blocks/sign/__question-container/sign__question-container.css);
+@import url(./blocks/sign/__question-container/_hidden/sign__question-container_hidden.css);
+@import url(./blocks/sign/__question/sign__question.css);
+@import url(./blocks/sign/__redirect/sign__redirect.css);
+@import url(./blocks/sign/__submit-button/sign__submit-button.css);

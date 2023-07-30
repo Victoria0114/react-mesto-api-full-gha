@@ -22,10 +22,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        name,
-        about,
-      }),
+      body: JSON.stringify({ name, about}),
     }).then(this._checkResponse);
   }
 
@@ -33,9 +30,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        avatar,
-      }),
+      body: JSON.stringify({ avatar }),
     }).then(this._checkResponse);
   }
 
@@ -50,10 +45,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({
-        name,
-        link,
-      }),
+      body: JSON.stringify({ name, link }),
     }).then(this._checkResponse);
   }
 
@@ -77,8 +69,6 @@ export default class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
-
-  /////   !!!!!!!
 
   changeLikeCardStatus(id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {

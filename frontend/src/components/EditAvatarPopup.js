@@ -1,8 +1,8 @@
-import React, { createRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateAvatar }) {
-  const avatar = createRef();
+  const avatar = useRef();
 
   useEffect(() => {
     avatar.current.value = "";

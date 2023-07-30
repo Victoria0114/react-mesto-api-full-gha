@@ -10,11 +10,7 @@ export default function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
-}) {
-  // const [userName, setUserName] = useState("");
-  // const [userDescription, setUserDescription] = useState("");
-  // const [userAvatar, setUserAvatar] = useState("");
-  // const [cards, setCards] = useState([]);
+ }) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
