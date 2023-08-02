@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema.Types;
-const { urlCheckPattern } = require('../utils/constants');
+
+const { URL_REGEX } = require('../utils/constants');
 
 const cardSchema = new Schema(
   {
@@ -19,8 +20,8 @@ const cardSchema = new Schema(
       type: String,
       required: true,
       validate: {
-        validator: (url) => urlCheckPattern.test(url),
-        message: 'Введите URL',
+        validator: (url) => URL_REGEX.test(url),
+        message: 'Требуется ввести URL',
       },
     },
 
@@ -30,13 +31,11 @@ const cardSchema = new Schema(
       required: true,
     },
 
-    likes: [
-      {
-        type: ObjectId,
-        ref: 'user',
-        default: [],
-      },
-    ],
+    likes: [{
+      type: ObjectId,
+      ref: 'user',
+      default: [],
+    }],
 
     createdAt: {
       type: Date,

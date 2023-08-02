@@ -1,0 +1,20 @@
+.gallery__del{
+    position: absolute;
+    /* display: none; */
+    top: 20px;
+    right: 20px;
+    width: 18px;
+    height: 19px;
+    border: none;
+    background-image: url(../../../images/delete.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+
+.gallery__del:hover {
+    opacity: .6;
+    transition: .7s all;
+}

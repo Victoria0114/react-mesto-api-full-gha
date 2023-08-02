@@ -1,27 +1,29 @@
-import imageSuccessPath from "../images/success.svg";
-import imageErrorPath from "../images/error.svg";
+import successImage from "../images/successImage.svg";
+import failImage from "../images/failImage.svg";
 
-const InfoTooltip = (props) => {
+function InfoTooltip(props) {
   return (
-    <div
-      className={`popup popup_type_${props.name} ${
-        props.isOpen && "popup_opened"
+    <section
+      className={`popup popup_type_tooltip ${
+        props.isModalWindowOpen ? "popup_opened" : ""
       }`}
-      id={props.name}
-      onClick={props.onClick}
+      onClick={props.onClose}
     >
-      <div className={`popup__container ${props.containerType}`}>
-        <img className="popup__img" alt={props.alt} src={ props.isOk ? imageSuccessPath : imageErrorPath } />
-        <span className="popup__caption">{ props.isOk ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз." }</span>
+      <div className="popup__container popup__container-open">
         <button
-          className={`popup__close popup__close_type_${props.name}`}
-          id={`${props.name}-closer`}
-          type="button"
-          aria-label="Закрыть форму"
+          className="popup__button-close"
+          type="reset"
           onClick={props.onClose}
         />
+        <img
+          className="popup__img-open"
+          src={props.isSuccess ? successImage : failImage}
+          alt="#"
+        />
+        <h2 className="popup__title popup__title-open">{props.message}</h2>
       </div>
-    </div>
+    </section>
   );
-};
+}
+
 export default InfoTooltip;

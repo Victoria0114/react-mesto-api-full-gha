@@ -1,47 +1,47 @@
 const Card = require('../models/card');
 
-const NotFoundError = require('../errors/NotFoundError');
-const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const NotFoundError = require('../errors/NotFoundError');
+const InaccurateDataError = require('../errors/InaccurateDataError');
 
-// Импорт статуса создания нового документа методом create
-const { CREATED } = require('../utils/constants');
-
-function getAllCards(_, res, next) {
-  Card.find({})
+// Все карточки:
+function getInitialCards(_, res, next) {
+  Card
+    .find({})
+    .populate(['owner', 'likes'])
     .then((cards) => res.send({ data: cards }))
     .catch(next);
 }
 
-function createCard(req, res, next) {
+// Создание новой карточки:
+function addNewCard(req, res, next) {
   const { name, link } = req.body;
   const { userId } = req.user;
 
-  Card.create({ name, link, owner: userId })
-    .then((card) => res.status(CREATED).send({ data: card }))
+  Card
+    .create({ name, link, owner: userId })
+    .then((card) => res.status(201).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(
-          new BadRequestError(
-            'Передача некорректных данных, при попытке добавления новой карточки на страницу.',
-          ),
-        );
+        next(new InaccurateDataError('Переданы некорректные данные при создании карточки'));
       } else {
         next(err);
       }
     });
 }
 
+// Удаление карточки:
 function deleteCard(req, res, next) {
   const { id: cardId } = req.params;
   const { userId } = req.user;
 
-  Card.findById({
-    _id: cardId,
-  })
+  Card
+    .findById({
+      _id: cardId,
+    })
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('Карточка c передаваемым ID не найдена');
+        throw new NotFoundError('Данные по указанному id не найдены');
       }
 
       const { owner: cardOwnerId } = card;
@@ -54,7 +54,7 @@ function deleteCard(req, res, next) {
     })
     .then((deletedCard) => {
       if (!deletedCard) {
-        throw new NotFoundError('Данная карточка была удалена');
+        throw new NotFoundError('Карточка уже была удалена');
       }
 
       res.send({ data: deletedCard });
@@ -62,66 +62,62 @@ function deleteCard(req, res, next) {
     .catch(next);
 }
 
-function putLike(req, res, next) {
+// Лайк на карточки:
+function addLike(req, res, next) {
   const { cardId } = req.params;
   const { userId } = req.user;
 
-  Card.findByIdAndUpdate(
-    cardId,
-    {
-      $addToSet: {
-        likes: userId,
+  Card
+    .findByIdAndUpdate(
+      cardId,
+      {
+        $addToSet: {
+          likes: userId,
+        },
       },
-    },
-    {
-      new: true,
-    },
-  )
+      {
+        new: true,
+      },
+    )
     .then((card) => {
       if (card) return res.send({ data: card });
 
-      throw new NotFoundError('Карточка с данным ID не найдена');
+      throw new NotFoundError('Карточка с указанным id не найдена');
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(
-          new BadRequestError(
-            'Передача некорректных данных при попытке поставить лайк.',
-          ),
-        );
+        next(new InaccurateDataError('Переданы некорректные данные при добавлении лайка карточке'));
       } else {
         next(err);
       }
     });
 }
 
-function deleteLike(req, res, next) {
+// Удаление лайка с карточки:
+function removeLike(req, res, next) {
   const { cardId } = req.params;
   const { userId } = req.user;
 
-  Card.findByIdAndUpdate(
-    cardId,
-    {
-      $pull: {
-        likes: userId,
+  Card
+    .findByIdAndUpdate(
+      cardId,
+      {
+        $pull: {
+          likes: userId,
+        },
       },
-    },
-    {
-      new: true,
-    },
-  )
+      {
+        new: true,
+      },
+    )
     .then((card) => {
       if (card) return res.send({ data: card });
 
-      throw new NotFoundError('Карточка c передаваемым ID не найдена');
+      throw new NotFoundError('Данные по указанному id не найдены');
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(
-          new BadRequestError(
-            'Передача некорректных данных при попытке удаления лайка с карточки.',
-          ),
-        );
+        next(new InaccurateDataError('Переданы некорректные данные при снятии лайка карточки'));
       } else {
         next(err);
       }
@@ -129,9 +125,9 @@ function deleteLike(req, res, next) {
 }
 
 module.exports = {
-  getAllCards,
-  createCard,
+  getInitialCards,
+  addNewCard,
+  addLike,
+  removeLike,
   deleteCard,
-  putLike,
-  deleteLike,
 };

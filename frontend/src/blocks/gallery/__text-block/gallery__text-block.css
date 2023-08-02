@@ -1,0 +1,8 @@
+.gallery__text-block {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 20px 20px 21px;
+  border-radius: 0 0 10px 10px;
+}

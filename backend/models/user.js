@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
-const bcrypt = require('bcryptjs');
-const { urlCheckPattern } = require('../utils/constants');
 
+const { URL_REGEX } = require('../utils/constants');
+
+// byaka
 const userSchema = new Schema(
   {
     email: {
@@ -12,7 +14,7 @@ const userSchema = new Schema(
       unique: true,
       validate: {
         validator: (email) => /.+@.+\..+/.test(email),
-        message: 'Введите электронный адрес',
+        message: 'Требуется ввести электронный адрес',
       },
     },
 
@@ -20,6 +22,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
       select: false,
+      validate: {
+        validator: ({ length }) => length >= 6,
+        message: 'Пароль должен состоять минимум из 6 символов',
+      },
     },
 
     name: {
@@ -36,18 +42,16 @@ const userSchema = new Schema(
       default: 'Исследователь',
       validate: {
         validator: ({ length }) => length >= 2 && length <= 30,
-        message:
-          'Информация о пользователе должна быть длиной от 2 до 30 символов',
+        message: 'Информация о пользователе должна быть длиной от 2 до 30 символов',
       },
     },
 
     avatar: {
       type: String,
-      default:
-        'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+      default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
       validate: {
-        validator: (url) => urlCheckPattern.test(url),
-        message: 'Введите URL',
+        validator: (url) => URL_REGEX.test(url),
+        message: 'Требуется ввести URL',
       },
     },
   },
@@ -56,15 +60,17 @@ const userSchema = new Schema(
     versionKey: false,
     statics: {
       findUserByCredentials(email, password) {
-        return this.findOne({ email })
+        return this
+          .findOne({ email })
           .select('+password')
           .then((user) => {
             if (user) {
-              return bcrypt.compare(password, user.password).then((matched) => {
-                if (matched) return user;
+              return bcrypt.compare(password, user.password)
+                .then((matched) => {
+                  if (matched) return user;
 
-                return Promise.reject();
-              });
+                  return Promise.reject();
+                });
             }
 
             return Promise.reject();

@@ -1,87 +1,113 @@
-export default class Api {
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
+class Api {
+  constructor(options) {
+    this._baseUrl = options.baseUrl
   }
 
   _checkResponse(res) {
     if (res.ok) {
-      return res.json();
+      return Promise.resolve(res.json())
     }
-    return Promise.reject(`${res.status}`);
+
+    return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  patchUserInfo({ name, about }) {
-    return fetch(`${this._baseUrl}/users/me`, {
+  async patchUserInfo(data) {
+    const response = await fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({ name, about}),
-    }).then(this._checkResponse);
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+      }),
+    })
+    return this._checkResponse(response)
   }
 
-  patchAvatar({ avatar }) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({ avatar }),
-    }).then(this._checkResponse);
+  async getUserInfo() {
+    const response = await fetch(`${this._baseUrl}/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    return this._checkResponse(response)
   }
 
-  getCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      headers: this._headers,
-    }).then(this._checkResponse);
+  async getInitialCards() {
+    const response = await fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    return this._checkResponse(response)
   }
 
-  postCard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
+  async postCard(data) {
+    const response = await fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({ name, link }),
-    }).then(this._checkResponse);
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(data),
+    })
+    return this._checkResponse(response)
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  async deleteCard(cardId) {
+    const response = await fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    return this._checkResponse(response)
   }
 
-  putLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  async putLike(cardId) {
+    const response = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
-    }).then(this._checkResponse);
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    return this._checkResponse(response)
   }
 
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  async deleteLike(cardId) {
+    const response = await fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    return this._checkResponse(response)
   }
 
-  changeLikeCardStatus(id, isLiked) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: isLiked ? "DELETE" : "PUT",
-      headers: this._headers,
-    }).then(this._checkResponse);
+  async updateProfileUserAvatar(data) {
+    const response = await fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
+    })
+    return this._checkResponse(response)
   }
 }
 
-export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-64",
-  headers: {
-    authorization: "a7212cbe-3b54-4bb6-93d8-5cfe2a3625ad",
-    "Content-Type": "application/json",
-  },
-});
+const api = new Api({
+  baseUrl: "https://api.victoriasmesto.nomoreparties.co",
+})
+
+export default api

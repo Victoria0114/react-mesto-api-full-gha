@@ -1,6 +1,10 @@
 .footer {
-  flex-shrink: 0;
-  max-width: calc(100% - 38px);
-  max-width: 880px;
-  margin: 0 auto;
+  padding: 66px 0 60px 0;
+}
+
+@media screen and (max-width: 767px) {
+  .footer {
+    padding: 48px 0 36px 19px;
+  }
+
 }

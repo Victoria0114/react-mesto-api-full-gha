@@ -1,31 +1,28 @@
 import React from "react";
 
-function ImagePopup({ card, onClose, onCloseOverlay }) {
-  const className = `popup popup_type_image image-popup ${
-    card.name ? "popup_opened" : ""
-  }`;
+function ImagePopup(props) {
   return (
-    <div className={className}
-    onClick={onCloseOverlay}
+    <div
+      className={`popup popup_type_img ${
+        props.card.link ? "popup_opened" : ""
+      }`}
+      onClick={props.onCloseOverlay}
     >
-      
-      <figure className="popup__open-image">
+      <figure className="popup__container-img">
         <button
-          className="popup__close"
+          className="popup__button-close popup__button-close_big-img"
           type="button"
-          aria-label="Закрыть"
-          onClick={onClose}
+          onClick={props.onClose}
         ></button>
         <img
-          className="popup__image"
-          src={card?.link || ""}
-          alt={card && card.name}
+          className="popup__img"
+          src={props.card.link}
+          alt={props.card.name}
         />
-        <figcaption className="popup__place">
-          {card && card.name}
-        </figcaption>
+        <figcaption className="popup__title-img">{props.card.name}</figcaption>
       </figure>
     </div>
   );
 }
+
 export default ImagePopup;

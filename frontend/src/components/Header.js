@@ -1,19 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import headerLogo from "../images/logo.svg";
 
-import logo from "../images/logo.svg";
-import "../blocks/header/header.css";
-
-export default function Header(props) {
+function Header(props) {
   return (
     <header className="header">
-      <img className="logo" src={logo} alt="Логотип" />
+      <img src={headerLogo} alt="логотип" className="header__logo" />
       <div className="header__container">
-        <p className="header__email">{props.userEmail}</p>
-        <Link className="header__link" to={props.link} onClick={props.onSignOut} >
-          {props.linkText}
+        <span className="header__email">{props.email}</span>
+        <Link
+          to={props.buttonLink}
+          onClick={props.onSignout}
+          className="header__button"
+          href="#"
+        >
+          {props.buttonText}
         </Link>
       </div>
     </header>
   );
 }
+
+export default Header;

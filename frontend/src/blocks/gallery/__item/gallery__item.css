@@ -1,0 +1,9 @@
+.gallery__item {
+    padding: 0;
+    margin: 0;
+    transition: 0.9s ease-in-out;
+}
+
+.gallery__item:hover {
+    transform: scale(1.08);
+  }

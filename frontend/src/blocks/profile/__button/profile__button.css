@@ -1,0 +1,26 @@
+.profile__button {
+  margin: 0;
+  padding: 0;
+  min-width: 24px;
+  max-height: 24px;
+  margin-top: 33px;
+  /* background: url(../../../images/popup.svg) black 24px 24px; */
+  background-color: #000000;
+  border: 0;
+  cursor: pointer;
+
+}
+
+.profile__button:hover {
+  opacity: .6;
+  transition: .7s all;
+}
+
+/* @media screen and (max-width: 767px) {
+  .profile__button {
+    min-width: 18px;
+    max-height: 18px;
+  }
+
+} */
+

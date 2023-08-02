@@ -1,19 +1,14 @@
 [![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
 
+Тест
 # react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
+Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения.
   
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
-
-Адрес репозитория: https://github.com/...
-
+Адрес репозитория: https://
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP 158.160.72.253
 
-Frontend https://...
+Frontend https://victoriasmesto.nomoreparties.co
 
-Backend https://...
-
-
-http://victoriasmesto.nomoreparties.co/
+Backend https://api.victoriasmesto.nomoreparties.co

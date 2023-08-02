@@ -1,51 +1,55 @@
-export const BASE_URL = 'https://auth.nomoreparties.co.';
+class Auth {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl
+    this._headers = headers
+  }
 
-const isOk = (response) => {
-  return response.ok
-    ? response.json()
-    : Promise.reject(`Ошибка: ${response.status}`);
-};
+  isOk(res) {
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}`)
+    }
+    return res.json()
+  }
 
-export const register = (password, email) => {
-  return fetch(`${BASE_URL}/signup`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ password, email })
-  })
-  .then(isOk);
-};
+  register(newUserData) {
+    return fetch(`${this._baseUrl}/signup`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        email: newUserData.email,
+        password: newUserData.password,
+      }),
+    }).then(this.isOk)
+  }
 
-export const authorization = (password, email) => {
-  return fetch(`${BASE_URL}/signin`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ password, email })
-  })
-  .then(isOk)
-};
+  login(userData) {
+    return fetch(`${this._baseUrl}/signin`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        email: userData.email,
+        password: userData.password,
+      }),
+    }).then(this.isOk)
+  }
 
-export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-  }).then(isOk);
-};
-// export function request(url, options) {
-//   // принимает два аргумента: урл и объект опций, как и `fetch`
-//   return fetch(url, options).then(isOk)
-// }
+  checkToken(token) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }).then(this.isOk)
+  }
+}
 
-// И теперь просто нужно заменить все fetch на request 
-// и убрать дублирование проверки на ok. 
+const auth = new Auth({
+  baseUrl: "https://api.victoriasmesto.nomoreparties.co",
+  headers: {
+    "Content-Type": "application/json",
+   
+  },
+})
 
-// Все остальное будет без изменений. Код станет чище
-// И даже можно поместить внутрь baseUrl, 
-// чтобы не дублировать его в каждом запросе. 
-// Тогда нужно будет передавать просто endpoint в вызов
+export default auth

@@ -1,0 +1,17 @@
+.auth-form__title {
+  margin-top: 60px;
+  margin-bottom: 47px;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  .auth-form__title {
+    margin-top: 39px;
+    margin-bottom: 13px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

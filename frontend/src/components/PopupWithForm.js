@@ -1,50 +1,37 @@
 import React from "react";
 
-function PopupWithForm({
-  name,
-  title,
-  isOpen,
-  onClose,
-  children,
-  buttonText,
-  onSubmit,
-  //onCloseOverlay,
-}) {
-  function handleOverlay(evt) {
-    if (evt.target === evt.currentTarget) {
-      console.log('1567')
-      onClose(evt)
-    }
-  }
+//everyone form without img
+function PopupWithForm(props) {
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}>
-      <div className="popup__overlay" onClick={handleOverlay}>
+    <div
+      className={`popup popup_type_${props.name} ${
+        props.isModalWindowOpen ? "popup_opened" : ""
+      }`}
+      onClick={props.onCloseOverlay}
+    >
       <div className="popup__container">
+        <button
+          className="popup__button-close"
+          type="button"
+          onClick={props.onClose}
+        />
+        <h2 className="popup__title">{props.title}</h2>
+        {props.children}
+        <form
+          className="popup__form"
+          name={props.name}
+          onSubmit={props.onSubmit}
+        >
           <button
-            className={`popup__close popup__close_type_${name}`}
-            type="button"
-            onClick={onClose}
-            aria-label="Закрыть форму"
-          ></button>
-          <h2 className="popup__title">{title}</h2>
-          <form
-            className="popup__form"
-            name={`form-${name}`}
-            onSubmit={onSubmit}
+            className="popup__button-submit popup__button-submit_delete-card"
+            type="submit"
           >
-            {children}
-            <button
-              className={`popup__save popup__save_type_${name}`}
-              type="submit"
-              aria-label="Сохранить"
-              // onClick={onClose}
-            >
-              {buttonText}
-            </button>
-          </form>
-      </div>
+            {props.buttonText || "Сохранить"}
+          </button>
+        </form>
       </div>
     </div>
   );
 }
+
 export default PopupWithForm;

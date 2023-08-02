@@ -1,14 +1,9 @@
 .header__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-start;
-    margin: 0;
-    padding-top: 6px;
-    padding-bottom: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 24px;
+  font-size: 18px;
+  line-height: calc(22 / 18 * 100%);
 }
-@media (max-width: 922px) {
-    .header__container {
-      margin-right: 27px;
-    }
-  }
+

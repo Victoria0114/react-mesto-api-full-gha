@@ -1,71 +1,81 @@
 import React, { useContext } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import profileEditAvatar from "../images/popup.svg";
 import Card from "./Card";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Header from "./Header";
 
-export default function Main({
-  cards,
-  onEditProfile,
-  onAddPlace,
-  onEditAvatar,
-  onCardClick,
-  onCardLike,
-  onCardDelete,
- }) {
+// обработчики
+function Main(props) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
-    <main className="content">
-      <section className="profile" id="userId">
-        <button
-          className="profile__avatar-button"
-          type="button"
-          id="profileAvatar"
-          onClick={onEditAvatar}
-        >
-          <img
-            className="profile__avatar"
-            src={currentUser.avatar}
-            alt="Аватар"
-          />
-        </button>
-        <div className="profile__info">
-          <div className="profile__container">
-            <h1 className="profile__name">{currentUser.name}</h1>
-            <button
-              className="profile__edit-button"
-              id="profile-edit-button"
-              type="button"
-              onClick={onEditProfile}
-              aria-label="Добавить"
-            ></button>
+    <>
+      <Header
+        buttonText="Выйти"
+        buttonLink="/sign-in"
+        onSignout={props.onSignout}
+        email={props.email}
+      />
+      <main>
+        <section className="profile">
+          <div className="profile__item">
+            <div className="profile__wrapper-avatar">
+              <img
+                src={currentUser.avatar}
+                alt="изображение владельца профиля"
+                className="profile__img"
+              />
+              <button
+                className="profile__edit-avatar-button"
+                onClick={() => {
+                  props.onEditAvatar(true);
+                }}
+              />
+            </div>
+            <div className="profile__form">
+              <div className="profile__text">
+                <h1 className="profile__title">{currentUser.name}</h1>
+                <p className="profile__info">{currentUser.about}</p>
+              </div>
+              <button
+                type="button"
+                className="profile__button"
+                onClick={() => {
+                  props.onEditProfile(true);
+                }}
+              >
+                <img
+                  src={profileEditAvatar}
+                  className="profile__button-img"
+                  alt="кнопка для открытия формы редактирования"
+                />
+              </button>
+            </div>
           </div>
-          <p className="profile__about">{currentUser.about}</p>
-        </div>
-        <button
-          className="profile__add-button"
-          id="profile-add-button"
-          type="button"
-          onClick={onAddPlace}
-          aria-label="Добавить"
-        ></button>
-      </section>
-
-      <div className="cards">
-        {cards.map((card) => (
-          <Card
-            src={card.link}
-            name={card.name}
-            key={card._id}
-            card={card}
-            likes={card.likes}
-            owner={card.owner}
-            cardId={card._id}
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
+          <button
+            type="button"
+            className="profile__button-plus"
+            onClick={() => {
+              props.onAddPlace(true);
+            }}
           />
-        ))}
-      </div>
-    </main>
+        </section>
+
+        <section className="gallery">
+          {props.cards.map((card) => (
+            <Card
+            key={card._id}
+              card={card}
+              onCardDelete={props.onDeletedCard}
+              onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
+              onPopupDeleteCard={props.onPopupDeleteCard}
+            />
+          ))}
+        </section>
+      </main>
+    </>
   );
 }
+
+export default Main;

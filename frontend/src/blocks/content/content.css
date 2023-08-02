@@ -1,5 +1,17 @@
 .content {
-  flex: 1;
   max-width: 880px;
-  margin: 0;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    max-width: 680px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .content {
+    padding: 0 19px;
+    max-width: 100%;
+  }
 }
