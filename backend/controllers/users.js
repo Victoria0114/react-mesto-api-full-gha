@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { NODE_ENV, SECRET_SIGNING_KEY } = require('../utils/constants');
-const UnauthorizedError = require('../errors/UnauthorizedError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const User = require('../models/user');
@@ -67,9 +66,6 @@ function loginUser(req, res, next) {
       );
 
       return res.send({ token });
-    })
-    .catch(() => {
-      throw new UnauthorizedError('Неправильные почта или пароль');
     })
     .catch(next);
 }
