@@ -33,8 +33,8 @@ router.get('/:id', celebrate({
 // Маршрут для редактирования данных текущего пользователя
 router.patch('/me', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30).required(),
+    about: Joi.string().min(2).max(30).required(),
   }),
 }), editProfileUserInfo);
 
@@ -43,7 +43,7 @@ router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
     avatar: Joi
       .string()
-      .pattern(URL_REGEX),
+      .pattern(URL_REGEX).required(),
   }),
 }), updateProfileUserAvatar);
 
